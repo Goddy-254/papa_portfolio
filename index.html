@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noel Taylor - Resume (Pure CSS)</title>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS Variables for colors - Black and White Theme */
+        :root {
+            --color-dark-bg: #1a1a1a; /* Deep Charcoal for sidebar */
+            --color-accent-gray: #444444; /* Dark Gray for main headings */
+            --color-light-text: #e0e0e0; /* Light Gray for text on dark column */
+            --color-skill-accent: #333333; /* Deep Gray accent for skill bars and icons */
+            --color-page-bg: #f7f7f7; /* Near-White background */
+            --color-divider: #dddddd; /* Light divider color */
+        }
+
+        /* Base Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-page-bg);
+            padding: 1rem;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .cv-container {
+            max-width: 1200px;
+            width: 100%;
+            background-color: white;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            /* Box Shadow for depth */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Grid Layout */
+        .cv-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* Default mobile layout: single column */
+        }
+
+        .sidebar-col {
+            background-color: var(--color-dark-bg);
+            color: white;
+            padding: 2rem;
+            order: 1; /* For mobile, dark column comes first */
+        }
+
+        .main-col {
+            background-color: white;
+            padding: 2rem;
+            order: 2; /* For mobile, light column comes second */
+        }
+
+        /* Desktop Layout (768px and up) */
+        @media (min-width: 768px) {
+            .cv-grid {
+                /* Sidebar takes roughly 1/3, Main takes 2/3 */
+                grid-template-columns: minmax(280px, 35%) 1fr;
+            }
+            .sidebar-col {
+                order: initial; /* Reset order for desktop */
+            }
+            .main-col {
+                order: initial; /* Reset order for desktop */
+            }
+        }
+
+        /* Typography and Headers */
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+            line-height: 1;
+        }
+        
+        .cv-container header p {
+            font-size: 0.875rem; 
+            font-weight: 300; 
+            text-transform: uppercase; 
+            color: #94a3b8; /* Keep gray for subtitle contrast */
+        }
+
+        .sidebar-col h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 0.5rem;
+        }
+
+        .main-col h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--color-accent-gray);
+        }
+        
+        .main-col section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--color-divider); /* Light gray border */
+        }
+        .main-col section:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+
+        /* Profile Image */
+        .profile-img-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .profile-img {
+            width: 12rem;
+            height: 12rem;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid var(--color-accent-gray);
+        }
+
+        .profile-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Icon Lists */
+        .icon-list, .main-icon-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .icon-list li, .main-icon-list li {
+            position: relative;
+            padding-left: 1.75rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Sidebar Icons (White) */
+        .icon-list li::before {
+            content: attr(data-icon);
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: white; 
+            font-size: 1rem;
+        }
+        
+        /* Main Column Icons (Gray Accent) */
+        .main-icon-list li::before {
+            content: attr(data-icon);
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--color-skill-accent); 
+            font-size: 1rem;
+        }
+        
+        /* Separator lines in dark column */
+        .sidebar-col section {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Education Details */
+        .education-entry {
+            margin-bottom: 1.5rem;
+        }
+        .education-entry p {
+            margin: 0;
+            line-height: 1.3;
+        }
+        .education-entry > p:first-child {
+            font-weight: 600;
+        }
+        .education-degree {
+            color: #94a3b8;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+        }
+        .education-dates {
+            color: #94a3b8; 
+            font-weight: 400; 
+            font-size: 0.75rem;
+        }
+
+        /* Job Experience Details */
+        .job-entry {
+            margin-bottom: 1.5rem;
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.25rem;
+        }
+
+        .job-title {
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: #1f2937;
+        }
+
+        .job-company {
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--color-accent-gray);
+        }
+
+        .job-dates {
+            font-size: 0.875rem;
+            color: #6b7280;
+            font-weight: 600;
+            text-align: right;
+        }
+        
+        /* Skills Section Grid */
+        #skills-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem 2rem;
+        }
+        
+        @media (min-width: 640px) {
+            #skills-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        .skill-item {
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .skill-item:hover {
+            background-color: #f9fafb;
+        }
+        
+        .skill-item.highlight {
+            outline: 2px solid var(--color-skill-accent);
+            outline-offset: 2px;
+        }
+
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: #374151;
+        }
+
+        .skill-level {
+            height: 6px;
+            background-color: #e2e8f0; /* Light track color */
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+
+        .skill-fill {
+            height: 100%;
+            /* Uses CSS variable set by JS for dynamic color */
+            background-color: var(--fill-color); 
+            transition: width 1s ease-out;
+            border-radius: inherit;
+        }
+
+        /* Flex helpers for section headers with icons */
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            color: var(--color-accent-gray);
+        }
+        .section-header svg {
+            width: 1.5rem;
+            height: 1.5rem;
+            margin-right: 0.75rem;
+            color: var(--color-skill-accent);
+            stroke-width: 2;
+        }
+
+        /* Language and Hobbies grid */
+        .sub-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        @media (min-width: 768px) {
+            .sub-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* Custom Message Box (for non-alert feedback) */
+        #custom-message-box {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background-color: var(--color-dark-bg);
+            color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+            opacity: 0;
+            transform: translateY(-20px);
+            z-index: 1000;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div id="cv-app" class="cv-container">
+        
+        <!-- CV Grid Container -->
+        <div class="cv-grid">
+            
+            <!-- LEFT COLUMN (Sidebar - Dark) -->
+            <div class="sidebar-col">
+                
+                <!-- Profile Header -->
+                <header class="text-center" style="margin-bottom: 2rem;">
+                    <h1>NOEL TAYLOR</h1>
+                    <p>GRAPHIC & WEB DESIGNER</p>
+                </header>
+
+                <!-- Profile Image -->
+                <div class="profile-img-container">
+                    <div class="profile-img">
+                        <!-- Placeholder Image (replace with actual image URL) -->
+                        <img 
+                            src="https://placehold.co/192x192/475569/ffffff?text=PROFILE" 
+                            alt="Noel Taylor Profile Picture" 
+                            onerror="this.onerror=null; this.src='https://placehold.co/192x192/475569/ffffff?text=Image+Not+Found'"
+                        >
+                    </div>
+                </div>
+
+                <!-- Contact Section -->
+                <section style="margin-top: 0;">
+                    <h2>Contact</h2>
+                    <ul class="icon-list" style="color: var(--color-light-text);">
+                        <li data-icon="&#9990;">+1-512-345-5678</li>
+                        <li data-icon="&#9993;">your.email@website.com</li>
+                        <li data-icon="&#9728;">www.yourwebsite.com</li>
+                        <li data-icon="&#9906;">123 Anywhere St, City, State, Country</li>
+                    </ul>
+                </section>
+
+                <!-- Education Section -->
+                <section>
+                    <h2>Education</h2>
+                    <div class="education-entry">
+                        <p>STANFORD UNIVERSITY</p>
+                        <p class="education-degree">MASTER DEGREE GRADUATE</p>
+                        <p class="education-dates">2011 - 2013</p>
+                    </div>
+                    <div class="education-entry">
+                        <p>UNIVERSITY OF CHICAGO</p>
+                        <p class="education-degree">BACHELOR DEGREE GRADUATE</p>
+                        <p class="education-dates">2007 - 2010</p>
+                    </div>
+                </section>
+
+                <!-- References Section -->
+                <section style="border-bottom: none;">
+                    <h2>References</h2>
+                    <div class="education-entry" style="color: var(--color-light-text);">
+                        <p>DARWIN B. MAGANA</p>
+                        <p style="font-size: 0.9rem;">Senior Developer, Google</p>
+                        <p style="font-size: 0.75rem; color: #94a3b8; margin-top: 0.25rem;">1230 S. Dolores Street, Mancos, CO</p>
+                        <p style="font-size: 0.75rem; color: #94a3b8;">www.google.com/darwin</p>
+                    </div>
+                    <div class="education-entry" style="color: var(--color-light-text);">
+                        <p>ROBERT J. BELVIN</p>
+                        <p style="font-size: 0.9rem;">Project Manager, IBM</p>
+                        <p style="font-size: 0.75rem; color: #94a3b8; margin-top: 0.25rem;">2819 Fairfax Drive, Newark, NJ</p>
+                        <p style="font-size: 0.75rem; color: #94a3b8;">www.ibm.com/robert</p>
+                    </div>
+                </section>
+                
+            </div>
+
+            <!-- RIGHT COLUMN (Main Content - Light) -->
+            <div class="main-col">
+                
+                <!-- About Me Section -->
+                <section>
+                    <div class="section-header">
+                        <!-- Icon Placeholder: Info Circle -->
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <h2>About Me</h2>
+                    </div>
+                    <p style="font-size: 0.9rem; color: #4b5563; line-height: 1.6;">
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                    </p>
+                </section>
+
+                <!-- Job Experience Section -->
+                <section>
+                    <div class="section-header">
+                        <!-- Icon Placeholder: Briefcase -->
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.257c-.33-.082-.676-.129-1.03-.129H4.03c-.354 0-.701.047-1.03.129M12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9-9 4.03-9 9 4.03 9 9 9z"></path></svg>
+                        <h2>Job Experience</h2>
+                    </div>
+                    
+                    <!-- Role 1 -->
+                    <div class="job-entry">
+                        <div class="job-header">
+                            <div>
+                                <h3 class="job-title">SENIOR WEB DESIGNER</h3>
+                                <p class="job-company">Creative Agency / Chicago</p>
+                            </div>
+                            <p class="job-dates">2020 - Present</p>
+                        </div>
+                        <p style="font-size: 0.875rem; color: #4b5563; margin-top: 0.5rem;">
+                            Lorem Ipsum has been the industry's standard dummy text ever since, when unknown printer took a galley of type.
+                        </p>
+                    </div>
+
+                    <!-- Role 2 -->
+                    <div class="job-entry">
+                        <div class="job-header">
+                            <div>
+                                <h3 class="job-title">GRAPHIC DESIGNER</h3>
+                                <p class="job-company">Creative Agency / Chicago</p>
+                            </div>
+                            <p class="job-dates">2015 - 2020</p>
+                        </div>
+                        <p style="font-size: 0.875rem; color: #4b5563; margin-top: 0.5rem;">
+                            Lorem Ipsum has been the industry's standard dummy text ever since 1900s, when unknown printer took a galley of type.
+                        </p>
+                    </div>
+
+                    <!-- Role 3 -->
+                    <div class="job-entry" style="margin-bottom: 0;">
+                        <div class="job-header">
+                            <div>
+                                <h3 class="job-title">MARKETING MANAGER</h3>
+                                <p class="job-company">Marketing Agency / NJ</p>
+                            </div>
+                            <p class="job-dates">2013 - 2015</p>
+                        </div>
+                        <p style="font-size: 0.875rem; color: #4b5563; margin-top: 0.5rem;">
+                            Lorem Ipsum has been the industry's standard dummy text ever since 1500s, when unknown printer took a galley of type.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Skills Section -->
+                <section>
+                    <div class="section-header">
+                        <!-- Icon Placeholder: Bolt -->
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21H11m4-10V3m-4 2.5v7.5"></path></svg>
+                        <h2>Skills</h2>
+                    </div>
+
+                    <div id="skills-list">
+                        <!-- Skills are rendered here by JavaScript -->
+                    </div>
+                </section>
+
+                <!-- Language & Hobbies Section -->
+                <div class="sub-grid">
+                    
+                    <!-- Language Section -->
+                    <section style="border-bottom: none; padding-bottom: 0;">
+                        <div class="section-header">
+                            <!-- Icon Placeholder: Globe -->
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m6 12l-1-4m-2 2l-1-4m4 6v-6M5 21h14"></path></svg>
+                            <h2>Language</h2>
+                        </div>
+                        <ul class="main-icon-list" style="color: #4b5563;">
+                            <li data-icon="&#9733;">ENGLISH <span style="font-size: 0.75rem; color: #9ca3af;">- NATIVE</span></li>
+                            <li data-icon="&#9733;">SPANISH <span style="font-size: 0.75rem; color: #9ca3af;">- PROFESSIONAL</span></li>
+                            <li data-icon="&#9733;">FRENCH <span style="font-size: 0.75rem; color: #9ca3af;">- CONVERSATIONAL</span></li>
+                        </ul>
+                    </section>
+
+                    <!-- Hobbies Section -->
+                    <section style="border-bottom: none; padding-bottom: 0;">
+                        <div class="section-header">
+                            <!-- Icon Placeholder: Lightbulb/Idea -->
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.464 9.563 5.09 8.253 5.09c-2.31 0-4.512 1.055-5.973 2.99a2.723 2.723 0 00-1.042 3.864c.264.444.606.845 1.018 1.185l.18.15.532.45c.805.679 1.776 1.144 2.802 1.353a4.717 4.717 0 001.036.096c1.157 0 2.29-.336 3.284-1.002.836-.554 1.51-1.298 1.996-2.186.486-.888.66-1.897.498-2.923C16.94 8.71 15.683 7.644 14.12 7.02c-1.282-.524-2.673-.755-4.103-.69z"></path></svg>
+                            <h2>Hobbies</h2>
+                        </div>
+                        <ul class="main-icon-list" style="color: #4b5563;">
+                            <li data-icon="&#9998;">READING BOOKS</li>
+                            <li data-icon="&#9924;">TRAVELING</li>
+                            <li data-icon="&#9813;">PLAYING CHESS</li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+    <!-- Custom Message Box for interactive feedback -->
+    <div id="custom-message-box"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Data for skills section - colors updated to a strong gray for B&W theme
+            const skills = [
+                { name: 'Photoshop', level: 90, color: '#333333' },
+                { name: 'Illustrator', level: 85, color: '#333333' },
+                { name: 'HTML/CSS/JS', level: 95, color: '#333333' },
+                { name: 'Microsoft Word', level: 75, color: '#333333' },
+                { name: 'Web Flow', level: 80, color: '#333333' },
+                { name: 'InDesign', level: 60, color: '#333333' },
+            ];
+
+            const skillsList = document.getElementById('skills-list');
+
+            // Function to render skill bars using vanilla JS and template literals
+            function renderSkills() {
+                skillsList.innerHTML = skills.map(skill => `
+                    <div class="skill-item" data-skill-name="${skill.name}" data-level="${skill.level}">
+                        <div class="skill-header">
+                            <span>${skill.name}</span>
+                            <span style="font-size: 0.75rem; color: #6b7280;">${skill.level}%</span>
+                        </div>
+                        <div class="skill-level">
+                            <div 
+                                class="skill-fill" 
+                                style="width: ${skill.level}%; --fill-color: ${skill.color};"
+                            ></div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Function to show a custom message box (instead of alert)
+            function showMessageBox(message) {
+                let msgBox = document.getElementById('custom-message-box');
+                
+                msgBox.textContent = message;
+                msgBox.style.opacity = '1';
+                msgBox.style.transform = 'translateY(0)';
+
+                // Auto-hide after 3 seconds
+                clearTimeout(msgBox.timer);
+                msgBox.timer = setTimeout(() => {
+                    msgBox.style.opacity = '0';
+                    msgBox.style.transform = 'translateY(-20px)';
+                }, 3000);
+            }
+
+            // Attach interactivity handler
+            function setupInteractivity() {
+                skillsList.addEventListener('click', (event) => {
+                    const item = event.target.closest('.skill-item');
+                    if (!item) return;
+
+                    const name = item.dataset.skillName;
+                    const level = item.dataset.level;
+                    
+                    // Remove previous highlight from all items
+                    document.querySelectorAll('.skill-item').forEach(el => el.classList.remove('highlight'));
+
+                    // Apply new highlight
+                    item.classList.add('highlight');
+
+                    // Provide feedback
+                    showMessageBox(`Skill highlighted: ${name} (${level}%)`);
+                });
+            }
+
+            // Initial setup
+            renderSkills();
+            setupInteractivity();
+        });
+    </script>
+</body>
+</html>
